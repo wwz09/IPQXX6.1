@@ -4,14 +4,13 @@
 
 #include "ipq6018.dtsi"
 #include "ipq6018-512m.dtsi"
+#include "ipq6018-cpr-regulator.dtsi"
 #include "ipq6018-cp-cpu.dtsi"
-#include "ipq6018-cpufreq.dtsi"
 #include "ipq6018-ess.dtsi"
 #include "ipq6018-nss.dtsi"
 
 #include <dt-bindings/input/input.h>
 #include <dt-bindings/gpio/gpio.h>
-#include <dt-bindings/leds/common.h>
 
 / {
 	model = "Qihoo 360 V6";
@@ -24,11 +23,6 @@
 		led-failsafe = &led_system_red;
 		led-running = &led_system_green;
 		led-upgrade = &led_system_orange;
-
-		ethernet0 = &dp1;
-		ethernet1 = &dp2;
-		ethernet2 = &dp3;
-		ethernet3 = &dp4;
 	};
 
 	chosen {
@@ -125,27 +119,27 @@
 };
 
 &dp1 {
-	phy-handle = <&phy_0>;
+	phy-handle = <&qca8075_0>;
 	status = "okay";
-	qcom,id = <1>;
+	label = "lan3";
 };
 
 &dp2 {
-	phy-handle = <&phy_1>;
+	phy-handle = <&qca8075_1>;
 	status = "okay";
-	qcom,id = <2>;
+	label = "lan2";
 };
 
 &dp3 {
-	phy-handle = <&phy_2>;
+	phy-handle = <&qca8075_2>;
 	status = "okay";
-	qcom,id = <3>;
+	label = "lan1";
 };
 
 &dp4 {
-	phy-handle = <&phy_3>;
+	phy-handle = <&qca8075_3>;
 	status = "okay";
-	qcom,id = <4>;
+	label = "wan";
 };
 
 &mdio {
@@ -154,19 +148,23 @@
 	pinctrl-names = "default";
 	reset-gpios = <&tlmm 75 GPIO_ACTIVE_LOW>;
 
-	phy_0: ethernet-phy@0 {
+	qca8075_0: ethernet-phy@0 {
+		compatible = "ethernet-phy-ieee802.3-c22";
 		reg = <0>;
 	};
 
-	phy_1: ethernet-phy@1 {
+	qca8075_1: ethernet-phy@1 {
+		compatible = "ethernet-phy-ieee802.3-c22";
 		reg = <1>;
 	};
 
-	phy_2: ethernet-phy@2 {
+	qca8075_2: ethernet-phy@2 {
+		compatible = "ethernet-phy-ieee802.3-c22";
 		reg = <2>;
 	};
 
-	phy_3: ethernet-phy@3 {
+	qca8075_3: ethernet-phy@3 {
+		compatible = "ethernet-phy-ieee802.3-c22";
 		reg = <3>;
 	};
 };
